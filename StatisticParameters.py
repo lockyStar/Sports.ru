@@ -45,8 +45,15 @@ class Statistics:
         statistics = pd.DataFrame(result, columns=list(result))
         return statistics
 
+    def most_popular_post(self):
+        self.data['Popularity'] = self.data['Total Interactions'].div(self.data['Lifetime Post Total Reach'], axis=0)
+        result = self.data[self.data['Popularity'] == self.data['Popularity'].max()]
+        return result
 
 temp = Statistics('dataset_Facebook.csv')
 stat = temp.calculate()
 #print(stat)
 stat.to_csv('Result.csv', sep=';')
+most_popular = temp.most_popular_post()
+most_popular.to_csv('Popular.csv', sep=';')
+#print (most_popular)
